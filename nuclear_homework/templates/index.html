@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>核燃料燃耗模拟</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>核燃料燃耗模拟</h1>
+        <form id="input-form">
+            <input type="text" id="flux" name="flux" placeholder="Neutron Flux" required>
+            <input type="text" id="time_step" name="time_step" placeholder="Time Step (days)" required>
+            <input type="text" id="total_time" name="total_time" placeholder="Total Time (days)" required>
+            <button type="submit">Calculate</button>
+        </form>
+        <div id="plot-container">
+            <!-- 结果图像将显示在这里 -->
+        </div>
+    </div>
+    <script>
+        document.getElementById('input-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let formData = new FormData(event.target);
+            fetch('/calculate', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                let plotUrl = 'data:image/png;base64,' + data.plot_url;
+                document.getElementById('plot-container').innerHTML = `<img src="${plotUrl}" alt="N Over Time Plot">`;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
