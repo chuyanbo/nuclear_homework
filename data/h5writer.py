@@ -49,6 +49,6 @@ with h5py.File("data.h5", "w") as opt:
     chain_2_group = chain_group.create_group("chain_2")
     nuclei2 = np.array(["U238", "Np239", "Pu239", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
     chain_2_group.create_dataset("nuclei", data=nuclei2)
-    chain_2_group.create_dataset("reaction", data=chain1_reaction_data)
+    chain_2_group.create_dataset("reaction", data=chain2_reaction_data)
     
     
