@@ -24,9 +24,9 @@
                         "absorb_status":dtype=string, # 是否n,gamma吸收，如果吸收则为1
                         "absorb_gamma_cross_section":dtype=float64, # n,gamma吸收截面
                         "absorb_fission_cross_section":dtype=float64, # n,fission吸收截面
-                        "non-linear_factor":(dtype=dictionary) # 非线性因子
+                        "non-linear_factor":(dtype=list) # 非线性因子
                             {
-                                temperature:g_factor, # 温度：非线性因子
+                                [temperature,g_factor], # 温度：非线性因子
                                 ...
                             },
                         
