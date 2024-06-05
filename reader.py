@@ -1,14 +1,14 @@
 import h5py
 import numpy as np
-import json
 from scipy.interpolate import interp1d
+import json
 
 def interpolate_g_factor(temperature_g_factor, target_temperature):
     temperatures = temperature_g_factor[...,0]
     g_factors = temperature_g_factor[...,1]
     # Use linear interpolation
     interpolator = interp1d(temperatures, g_factors, kind='linear', fill_value='extrapolate')
-    return interpolator(target_temperature)
+    return interpolator(target_temperature-273.15)
 
 def read_h5_database(file_path,chain_key,temperature):
     with h5py.File(file_path, 'r') as f:
@@ -26,7 +26,7 @@ def read_h5_database(file_path,chain_key,temperature):
         print(f"Chain {chain_key}:")
         print("Nuclei:", nuclei_names)
         print("Name to Index:", nuclei_name_to_index)
-        
+
         # 获取反应信息
         for i in range(len(reaction)):
             reaction_entry = reaction[i]
@@ -50,18 +50,10 @@ def read_h5_database(file_path,chain_key,temperature):
                 non_linear_factor = json.loads(reaction_entry['non_linear_factor'])
                 temperature_g_factor = np.array(non_linear_factor,dtype=np.float64)
                 g_factor = interpolate_g_factor(temperature_g_factor, temperature)
+                # g_factor = 1
                 cross_section_factor = g_factor*np.sqrt((293)/(temperature))/np.sqrt((4)/(np.pi))
                 # 写入参数
                 absorb_unit_matrix[origin_nuclei_id,origin_nuclei_id] = - absorb_cross_section * cross_section_factor
                 absorb_unit_matrix[target_nuclei_id ,origin_nuclei_id] = + absorb_gamma_cross_section * cross_section_factor
                 
-    return decay_matrix , absorb_unit_matrix
-
-if __name__ ==  '__main__':
-    with h5py.File('./data/data.h5', 'r') as f:
-        test_reaction = f['chain/chain_1/reaction/'][1]
-        print(test_reaction)
-        print(test_reaction['non_linear_factor'])
-        test_g = json.loads(test_reaction['non_linear_factor'])
-        print(test_g)
-        print(test_g[0])
+    return decay_matrix , absorb_unit_matrix , nuclei_name_to_index , nuclei_names 
