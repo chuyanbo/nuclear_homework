@@ -1,5 +1,6 @@
 import h5py
 import numpy as np
+import json
 from scipy.interpolate import interp1d
 
 def interpolate_g_factor(temperature_g_factor, target_temperature):
@@ -46,7 +47,7 @@ def read_h5_database(file_path,chain_key,temperature):
                 absorb_gamma_cross_section = float(reaction_entry['absorb_gamma_cross_section'])
                 absorb_fission_cross_section = float(reaction_entry['absorb_fission_cross_section'])
                 absorb_cross_section = absorb_gamma_cross_section + absorb_fission_cross_section
-                non_linear_factor = reaction_entry['non-linear_factor']
+                non_linear_factor = json.loads(reaction_entry['non_linear_factor'])
                 temperature_g_factor = np.array(non_linear_factor,dtype=np.float64)
                 g_factor = interpolate_g_factor(temperature_g_factor, temperature)
                 cross_section_factor = g_factor*np.sqrt((293)/(temperature))/np.sqrt((4)/(np.pi))
@@ -55,3 +56,12 @@ def read_h5_database(file_path,chain_key,temperature):
                 absorb_unit_matrix[target_nuclei_id ,origin_nuclei_id] = + absorb_gamma_cross_section * cross_section_factor
                 
     return decay_matrix , absorb_unit_matrix
+
+if __name__ ==  '__main__':
+    with h5py.File('./data/data.h5', 'r') as f:
+        test_reaction = f['chain/chain_1/reaction/'][1]
+        print(test_reaction)
+        print(test_reaction['non_linear_factor'])
+        test_g = json.loads(test_reaction['non_linear_factor'])
+        print(test_g)
+        print(test_g[0])
