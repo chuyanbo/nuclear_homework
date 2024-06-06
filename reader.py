@@ -46,14 +46,21 @@ def read_h5_database(file_path,chain_key,temperature):
             if absorb_status:
                 absorb_gamma_cross_section = float(reaction_entry['absorb_gamma_cross_section'])
                 absorb_fission_cross_section = float(reaction_entry['absorb_fission_cross_section'])
-                absorb_cross_section = absorb_gamma_cross_section + absorb_fission_cross_section
-                non_linear_factor = json.loads(reaction_entry['non_linear_factor'])
-                temperature_g_factor = np.array(non_linear_factor,dtype=np.float64)
-                g_factor = interpolate_g_factor(temperature_g_factor, temperature)
+                # absorb_cross_section = absorb_gamma_cross_section + absorb_fission_cross_section
+                
+                gamma_non_linear_factor = json.loads(reaction_entry['gamma_non_linear_factor'])
+                fission_non_linear_factor = json.loads(reaction_entry['fission_non_linear_factor'])
+                
+                gamma_temperature_g_factor = np.array(gamma_non_linear_factor,dtype=np.float64)
+                fission_temperature_g_factor = np.array(fission_non_linear_factor,dtype=np.float64)
+                
+                gamma_g_factor = interpolate_g_factor(gamma_temperature_g_factor, temperature)
+                fission_g_factor = interpolate_g_factor(fission_temperature_g_factor, temperature)
                 # g_factor = 1
-                cross_section_factor = g_factor*np.sqrt((293)/(temperature))/np.sqrt((4)/(np.pi))
+                gamma_cross_section_factor = gamma_g_factor*np.sqrt((293)/(temperature))/np.sqrt((4)/(np.pi))
+                fission_cross_section_factor = fission_g_factor*np.sqrt((293)/(temperature))/np.sqrt((4)/(np.pi))
                 # 写入参数
-                absorb_unit_matrix[origin_nuclei_id,origin_nuclei_id] = - absorb_cross_section * cross_section_factor
-                absorb_unit_matrix[target_nuclei_id ,origin_nuclei_id] = + absorb_gamma_cross_section * cross_section_factor
+                absorb_unit_matrix[origin_nuclei_id,origin_nuclei_id] = - absorb_gamma_cross_section * gamma_cross_section_factor - absorb_fission_cross_section * fission_cross_section_factor
+                absorb_unit_matrix[target_nuclei_id ,origin_nuclei_id] = + absorb_gamma_cross_section * gamma_cross_section_factor
                 
     return decay_matrix , absorb_unit_matrix , nuclei_name_to_index , nuclei_names 
