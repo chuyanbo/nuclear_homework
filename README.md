@@ -30,14 +30,20 @@
                         "absorb_status":dtype=string, # 是否n,gamma吸收，如果吸收则为1
                         "absorb_gamma_cross_section":dtype=float64, # n,gamma吸收截面
                         "absorb_fission_cross_section":dtype=float64, # n,fission吸收截面
-                        "non_linear_factor":(json,dtype=string) # 非线性因子
+                        "gamma_non_linear_factor":(json,dtype=string) # 非线性因子
                             {
                                 [
                                     [temperature,g_factor], # 温度：非线性因子
                                     ...
                                 ]
                             },
-                        
+                        "fission_non_linear_factor":(json,dtype=string) # 非线性因子
+                            {
+                                [
+                                    [temperature,g_factor], # 温度：非线性因子
+                                    ...
+                                ]
+                            },
                         "target_nuclei_name":dtype=string:, # n,gamma目标核素
                     },
                     ...
