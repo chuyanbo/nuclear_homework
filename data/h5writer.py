@@ -19,9 +19,9 @@ reaction_dtype = np.dtype([
 chain1_reaction_data = np.array([
     (
         "U235",           # origin_nuclei_name
-        1,             # decay_status
+        0,             # decay_status
         3.12e-17,         # decay_constant
-        0,            # absorb_status
+        1,            # absorb_status
         99.3843,          # absorb_gamma_cross_section
         586.691,          # absorb_fission_cross_section
         json.dumps([[100, 0.961], [200, 0.9457], [400, 0.9294], [600, 0.9229]]),  # non_linear_factor
@@ -32,16 +32,9 @@ chain1_reaction_data = np.array([
     ("Np237",0,1.03E-14,1,175.43,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu238"),
     ("Pu238",0,2.51E-10,1,412.855,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu239")
 ], dtype=reaction_dtype)
+
 chain2_reaction_data = np.array([
-    ("U238",0,4.92E-18,1,2.73,0,json.dumps([[100, 1.0031], [200, 1.0049], [400, 1.0085], [600, 1.0122]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Np239"),
-    ("Np239",1,3.41E-06,0,0,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu239"),
-    ("Pu239",0,9.12E-13,1,274,747.393,json.dumps([[100, 1.1611], [200, 1.3388], [400, 1.8905], [600, 2.5321]]),json.dumps([[100, 1.115], [200, 1.2528], [400, 1.6904], [600, 2.2037]]),"Pu240"),
-    ("Pu240",0,3.35E-12,1,286,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu241"),
-    ("Pu241",0,1.53E-09,1,363.047,1012.3,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu242"),
-    ("Pu241",1,1.53E-09,0,363.047,1012.3,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Am241")
-], dtype=reaction_dtype)
-chain3_reaction_data = np.array([
-    ("U235",1,3.12e-17,0,99.3843,586.691,json.dumps([[100, 0.961], [200, 0.9457],[400, 0.9294], [600, 0.9229]]), json.dumps([[100, 0.9581], [200, 0.9411], [400, 0.9208], [600, 0.9108]]),"U236"),
+    ("U235",0,3.12e-17,1,99.3843,586.691,json.dumps([[100, 0.961], [200, 0.9457],[400, 0.9294], [600, 0.9229]]), json.dumps([[100, 0.9581], [200, 0.9411], [400, 0.9208], [600, 0.9108]]),"U236"),
     ("U236",0,9.38E-16,1,5.13396,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Np237"),
     ("Np237",0,1.03E-14,1,175.43,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu238"),
     ("Pu238",0,2.51E-10,1,412.855,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu239"),
@@ -52,7 +45,11 @@ chain3_reaction_data = np.array([
     ("Pu241",0,1.53E-09,1,363.047,1012.3,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu242"),
     ("Pu241",1,1.53E-09,0,363.047,1012.3,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Am241")
 ], dtype=reaction_dtype)
-chain4_reaction_data = np.array([
+chain3_reaction_data = np.array([
+    ("U235",0,3.12e-17,1,99.3843,586.691,json.dumps([[100, 0.961], [200, 0.9457],[400, 0.9294], [600, 0.9229]]), json.dumps([[100, 0.9581], [200, 0.9411], [400, 0.9208], [600, 0.9108]]),"U236"),
+    ("U236",0,9.38E-16,1,5.13396,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Np237"),
+    ("Np237",0,1.03E-14,1,175.43,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu238"),
+    ("Pu238",0,2.51E-10,1,412.855,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Pu239"),
     ("U238",0,4.92E-18,1,2.73,0,json.dumps([[100, 1.0031], [200, 1.0049], [400, 1.0085], [600, 1.0122]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"U239"),
     ("U239",1,0.000502281,0,22,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"Np239"),
     ("U239",0,0.000502281,1,22,0,json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),json.dumps([[100, 1], [200, 1], [400, 1], [600, 1]]),"U240"),
@@ -74,16 +71,11 @@ with h5py.File("data.h5", "w") as opt:
     chain_1_group.create_dataset("reaction", data=chain1_reaction_data)
 
     chain_2_group = chain_group.create_group("chain_2")
-    nuclei2 = np.array(["U238", "Np239", "Pu239", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
+    nuclei2 = np.array(["U235", "U236", "Np237", "Pu238","U238", "Np239", "Pu239", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
     chain_2_group.create_dataset("nuclei", data=nuclei2)
     chain_2_group.create_dataset("reaction", data=chain2_reaction_data)
     
     chain_3_group = chain_group.create_group("chain_3")
-    nuclei3 = np.array(["U235", "U236", "Np237", "Pu238", "U238", "Np239", "Pu239", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
+    nuclei3 = np.array(["U235", "U236", "Np237", "Pu238", "U238", "U239", "Np239", "Pu239", "U240", "Np240", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
     chain_3_group.create_dataset("nuclei", data=nuclei3)
     chain_3_group.create_dataset("reaction", data=chain3_reaction_data)
-    
-    chain_4_group = chain_group.create_group("chain_4")
-    nuclei4 = np.array(["U238", "U239", "Np239", "Pu239", "U240", "Np240", "Pu240", "Pu241","Pu242","Am241"], dtype=h5py.string_dtype(encoding='utf-8'))
-    chain_4_group.create_dataset("nuclei", data=nuclei4)
-    chain_4_group.create_dataset("reaction", data=chain4_reaction_data)
